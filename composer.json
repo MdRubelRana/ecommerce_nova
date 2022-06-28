@@ -10,7 +10,7 @@
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "laravel/nova": "~4.0"
+        "laravel/nova": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -63,8 +63,8 @@
     
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
+            "type": "path",
+            "url": "./nova"
         }
     ]
 }
