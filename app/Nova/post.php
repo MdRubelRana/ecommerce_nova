@@ -2,23 +2,15 @@
 
 namespace App\Nova;
 
-use App\Models\Category;
-use DateTime;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime as FieldsDateTime;
-use Laravel\Nova\Fields\File;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\HasOneThrough;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Post extends Resource
 {
@@ -57,11 +49,10 @@ class Post extends Resource
             ID::make(__('#'), 'id')
             ->sortable(),
 
-            Image::make('image','image')
+            Image::make('Image','image')
             ->disk('public')
             ->path('photos')
-            ->prunable()
-            ->rules('required'),
+            ->prunable(),
 
         
 
@@ -70,29 +61,22 @@ class Post extends Resource
 
             Slug::make('Slug')->from('title')
             ->separator('-')
-            ->hideFromIndex(),
+            ->hideFromIndex()
+            ->rules('required'),
 
             BelongsTo::make('Category'),
+
             BelongsTo::make('User'),
 
             FieldsDateTime::make('Created At')
             ->readonly(true),
             
+
+            MorphToMany::make('Tags'),
             
 
-            // Select::make(__('Select Category'))
-            // ->searchable()
-            // ->options([
-            //     '2'
-            // ]),
-            
-
-
-
-
-            HasMany::make('tags'),
-
-            Textarea::make(__('Description'), 'description'),
+            Textarea::make(__('Description'), 'description')
+            ->rules('required'),
         ];
     }
 
