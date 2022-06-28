@@ -41,14 +41,16 @@ class Category extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('#'), 'id')->sortable(),
+            ID::make(__('#'), 'id')
+            ->sortable(),
 
             Text::make(__('Name'), 'name')
             ->sortable()
             ->rules('required', 'max:50'),
 
             Text::make(__('Slug'), 'slug')
-            ->onlyOnIndex(),
+            ->hideWhenCreating()
+            ->hideWhenUpdating(),
 
             Text::make(__('Description'), 'description'),
         ];
