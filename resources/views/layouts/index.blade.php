@@ -42,7 +42,7 @@
           </div>
 
           <div class="col-4 site-logo">
-            <a href="" class="text-black h2 mb-0">Mini Blog</a>
+            <a href="{{ route('/') }}" class="text-black h2 mb-0">Mini Blog</a>
           </div>
 
           <div class="col-8 text-right">

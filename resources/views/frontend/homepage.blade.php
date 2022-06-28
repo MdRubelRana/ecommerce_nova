@@ -60,8 +60,10 @@
             @foreach ($recentPosts as $post)
             <div class="col-lg-4 mb-4">
                 <div class="entry2">
-                    <a href="{{ route('post', ['slug' => $post->slug]) }}"><img src="{{ $post->image }}"
-                            alt="post_image" class="img-fluid rounded"></a>
+                    <a href="{{ route('post', ['slug' => $post->slug]) }}">
+                        <img src="{{ $post->image }}"
+                            alt="post_image" class="img-fluid rounded">
+                        </a>
                     <div class="excerpt">
                         <span class="post-category text-white bg-secondary mb-3">{{ $post->category->name }}</span>
 
@@ -83,17 +85,17 @@
             @endforeach
         </div>
         <div class="row text-center pt-5 border-top">
-            {{ $recentPosts->links() }}
-            {{-- <div class="col-md-12">
-            <div class="custom-pagination">
-              <span>1</span>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <span>...</span>
-              <a href="#">15</a>
+            {{-- {{ $recentPosts->links() }} --}}
+            <div class="col-md-12">
+                <div class="custom-pagination">
+                    <span>1</span>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <span>...</span>
+                    <a href="#">15</a>
+                </div>
             </div>
-          </div> --}}
         </div>
     </div>
 </div>
@@ -104,9 +106,9 @@
         <div class="row align-items-stretch retro-layout">
 
             <div class="col-md-5 order-md-2">
-              @foreach ($randomlastColPost as $post)
-                
-              
+                @foreach ($randomlastColPost as $post)
+
+
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="hentry img-1 h-100 gradient"
                     style="background-image: url('{{ $post->image }}');">
                     <span class="post-category text-white bg-danger">{{ $post->category->name }}</span>
@@ -120,7 +122,7 @@
 
             <div class="col-md-7">
 
-              @foreach ($randomfirstColPost as $post)
+                @foreach ($randomfirstColPost as $post)
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="hentry img-2 v-height mb30 gradient"
                     style="background-image: url('{{ $post->image }}');">
                     <span class="post-category text-white bg-success">Nature</span>
