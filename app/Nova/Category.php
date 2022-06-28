@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Category extends Resource
@@ -20,7 +21,7 @@ class Category extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -40,7 +41,16 @@ class Category extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('#'), 'id')->sortable(),
+
+            Text::make(__('Name'), 'name')
+            ->sortable()
+            ->rules('required', 'max:50'),
+
+            Text::make(__('Slug'), 'slug')
+            ->onlyOnIndex(),
+
+            Text::make(__('Description'), 'description'),
         ];
     }
 
