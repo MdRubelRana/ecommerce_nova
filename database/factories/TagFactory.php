@@ -18,8 +18,8 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->name(),
-            'slug' => Str::slug($this->faker->name()),
+            'name' => $this->faker->unique()->word(),
+            'slug' => Str::slug($this->faker->word()),
             'description' => $this->faker->text(50),
         ];
     }

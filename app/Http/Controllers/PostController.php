@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +19,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::orderBy('created_at', 'DESC')->paginate(20);
+        return view('admin.post.index', compact('posts'));
     }
 
     /**
@@ -24,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('admin.post.create', compact(['categories', 'tags']));
     }
 
     /**
@@ -35,7 +43,38 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required|unique:posts,title',
+            'image' => 'required|image',
+            'description' => 'required',
+            'category' => 'required',
+        ]);
+
+        
+
+        $post = Post::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title, '-'),
+            'image' => 'image.jpg',
+            'description' => $request->description,
+            'category_id' => $request->category,
+            'user_id' => auth()->user()->id,
+            'published_at' => Carbon::now(),
+        ]);
+
+        $post->tags()->attach($request->tags);
+
+        // Adding post Image
+        if($request->has('image')){
+            $image = $request->image;
+            $image_new_name = time() . '.' . $image->getClientoriginalextension();
+            $image->move('storage/post/', $image_new_name);
+            $post->image = '/storage/post/' . $image_new_name;
+            $post->save();
+        }
+
+        Session::flash('success', 'Post created succesfully');
+        return redirect()->back();
     }
 
     /**
@@ -46,7 +85,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('admin.post.show', compact('post'));
     }
 
     /**
@@ -57,7 +96,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('admin.post.edit', compact(['post', 'categories', 'tags']));
     }
 
     /**
@@ -69,7 +110,32 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $this->validate($request,[
+            'title' => "required|unique:posts,title, $post->id",
+            // 'image' => 'required|image',
+            'description' => 'required',
+            'category' => 'required',
+        ]);
+
+        $post->title = $request->title;
+        $post->slug = Str::slug($request->title, '-');
+        $post->description = $request->description;
+        $post->category_id = $request->category;
+        
+        $post->tags()->sync($request->tags);
+
+        // Adding post Image
+        if($request->hasFile('image')){
+            $image = $request->image;
+            $image_new_name = time() . '.' . $image->getClientoriginalextension();
+            $image->move('storage/post/', $image_new_name);
+            $post->image = '/storage/post/' . $image_new_name;
+        }
+        
+        $post->save();
+
+        Session::flash('success', 'Post updated succesfully');
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +146,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if($post){
+            if(file_exists(public_path($post->image))){
+                unlink(public_path($post->image));
+            }
+            $post->delete();
+
+            Session::flash('danger', 'Post has been deleted');  
+        }
+        return redirect()->route('post.index');
     }
 }

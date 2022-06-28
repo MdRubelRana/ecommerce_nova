@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,13 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.homepage');
-});
+Route::get('/',  [FrontendController::class, 'home'])->name('/');
+Route::get('/category', [FrontendController::class, 'category'])->name('category');
+Route::get('/post/{slug}',  [FrontendController::class, 'post'])->name('post');
 
-Route::get('/products', function(){
-    return view(('frontend.products'));
-});
-Route::get('/single', function(){
-    return view(('frontend.single'));
-});
+
+
+// Route::get('/', function () {
+//     return view('frontend.homepage');
+// });
+
+// Route::get('/products', function(){
+//     return view(('frontend.products'));
+// });
+// Route::get('/single', function(){
+//     return view(('frontend.single'));
+// });

@@ -2,8 +2,11 @@
 
 namespace App\Nova;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Post extends Resource
@@ -20,7 +23,7 @@ class Post extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -40,7 +43,16 @@ class Post extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            ID::make(__('#'), 'id')
+            ->sortable(),
+
+            // Image::make(__('Thumbnail'), 'image'),
+
+            Text::make(__('Title'), 'title')
+            ->rules('required', 'max: 255'),
+
+            Text::make(__('Category'), 'category_id'),
+            Text::make(__('Author'), value('user_id', Category::class)),
         ];
     }
 
