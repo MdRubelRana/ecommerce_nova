@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\UserStatus;
 use App\Nova\Actions\UserStatusActive;
 use App\Nova\Actions\UserStatusDisabled;
 use App\Nova\Metrics\NewUsers;
@@ -56,19 +55,19 @@ class User extends Resource
                 ->rules('required', 'max:255'),
 
             Text::make('Email')
-                ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
             Boolean::make('Active')
             ->trueValue('Yes')
-            ->falseValue('No'),
+            ->falseValue('No')
+            ->rules('required'),
 
             Password::make('Password')
                 ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->creationRules('required', 'string', 'min:4')
+                ->updateRules('nullable', 'string', 'min:4'),
         ];
     }
 
