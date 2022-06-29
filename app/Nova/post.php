@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\DateTime as FieldsDateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -66,13 +67,13 @@ class Post extends Resource
 
             BelongsTo::make('Category'),
 
-            BelongsTo::make('User'),
+            BelongsToMany::make('Tags'),
 
             FieldsDateTime::make('Created At')
             ->readonly(true),
             
 
-            MorphToMany::make('Tags'),
+            // MorphToMany::make('Tags'),
             
 
             Textarea::make(__('Description'), 'description')

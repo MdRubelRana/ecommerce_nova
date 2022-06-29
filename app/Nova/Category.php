@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -48,9 +49,10 @@ class Category extends Resource
             ->sortable()
             ->rules('required', 'max:50'),
 
-            Text::make(__('Slug'), 'slug')
-            ->hideWhenCreating()
-            ->hideWhenUpdating(),
+            Slug::make('Slug')
+            ->from('name')
+            ->separator('-')
+            ->rules('required'),
 
             Text::make(__('Description'), 'description'),
         ];
