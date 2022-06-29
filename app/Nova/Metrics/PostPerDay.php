@@ -2,11 +2,11 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\User;
+use App\Models\Post;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\Trend;
 
-class TotalUsers extends Value
+class PostPerDay extends Trend
 {
     /**
      * Calculate the value of the metric.
@@ -16,7 +16,7 @@ class TotalUsers extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, User::class);
+        return $this->countByDays($request, Post::class);
     }
 
     /**
@@ -27,13 +27,10 @@ class TotalUsers extends Value
     public function ranges()
     {
         return [
+            1 => ('1 Day'),
             30 => __('30 Days'),
             60 => __('60 Days'),
-            365 => __('365 Days'),
-            'TODAY' => __('Today'),
-            'MTD' => __('Month To Date'),
-            'QTD' => __('Quarter To Date'),
-            'YTD' => __('Year To Date'),
+            90 => __('90 Days'),
         ];
     }
 
@@ -54,7 +51,6 @@ class TotalUsers extends Value
      */
     public function uriKey()
     {
-        return 'total-users';
-        return 'new-users';
+        return 'post-per-day';
     }
 }

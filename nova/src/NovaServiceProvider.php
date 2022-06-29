@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova;
 
+use App\Nova\Metrics\NewUsers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -182,4 +183,13 @@ class NovaServiceProvider extends ServiceProvider
             return Arr::isAssoc($this->toBase()->all());
         });
     }
+
+
+    protected function cards()
+{
+	return [
+		new NewUsers(),
+	];
+}
+    
 }

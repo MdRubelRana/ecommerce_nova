@@ -3,6 +3,7 @@
 namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\TotalUsers;
 use Laravel\Nova\Dashboard;
 
 class UserInsights extends Dashboard
@@ -16,6 +17,7 @@ class UserInsights extends Dashboard
     {
         return [
             new NewUsers(),
+            new TotalUsers(),
         ];
     }
 

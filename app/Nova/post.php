@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\PostPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -67,13 +68,13 @@ class Post extends Resource
 
             BelongsTo::make('Category'),
 
-            BelongsToMany::make('Tags'),
+            BelongsTo::make('User'),
 
             FieldsDateTime::make('Created At')
             ->readonly(true),
             
 
-            // MorphToMany::make('Tags'),
+            BelongsToMany::make('Tags'),
             
 
             Textarea::make(__('Description'), 'description')
@@ -89,7 +90,9 @@ class Post extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new PostPerDay(),
+        ];
     }
 
     /**
