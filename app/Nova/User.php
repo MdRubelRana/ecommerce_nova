@@ -2,8 +2,12 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\UserStatus;
+use App\Nova\Actions\UserStatusActive;
+use App\Nova\Actions\UserStatusDisabled;
 use App\Nova\Metrics\NewUsers;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
@@ -57,6 +61,10 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
+            Boolean::make('Active')
+            ->trueValue('Yes')
+            ->falseValue('No'),
+
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
@@ -73,7 +81,7 @@ class User extends Resource
     public function cards(Request $request)
     {
         return [
-            new NewUsers(),
+            // new NewUsers(),
         ];
     }
 
@@ -107,6 +115,9 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new UserStatusActive(),
+            new UserStatusDisabled(),
+        ];
     }
 }
