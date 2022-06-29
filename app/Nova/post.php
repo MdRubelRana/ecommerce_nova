@@ -53,7 +53,6 @@ class Post extends Resource
 
             Image::make('Image','image')
             ->disk('public')
-            ->path('photos')
             ->prunable(),
 
         

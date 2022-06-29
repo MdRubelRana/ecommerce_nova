@@ -8,7 +8,7 @@
             <div class="col-md-4">
                 @foreach ($firstColPost as $post)
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="h-entry mb-30 v-height gradient"
-                    style="background-image: url('{{ $post->image }}');">
+                    style="background-image: url('{{ 'storage/'.$post->image }}');">
 
                     <div class="text">
                         <h2>{{ $post->title }}</h2>
@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 @foreach ($middleColPost as $post)
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="h-entry img-5 h-100 gradient"
-                    style="background-image: url('{{ $post->image }}');">
+                    style="background-image: url('{{ 'storage/'.$post->image }}');">
 
                     <div class="text">
                         <div class="post-categories mb-3">
@@ -36,7 +36,7 @@
             <div class="col-md-4">
                 @foreach ($lastColPost as $post)
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="h-entry mb-30 v-height gradient"
-                    style="background-image: url('{{ $post->image }}');">
+                    style="background-image: url('{{ 'storage/'.$post->image }}');">
 
                     <div class="text">
                         <h2>{{ $post->title }}</h2>
@@ -61,7 +61,7 @@
             <div class="col-lg-4 mb-4">
                 <div class="entry2">
                     <a href="{{ route('post', ['slug' => $post->slug]) }}">
-                        <img src="{{ $post->image }}"
+                        <img src="{{ 'storage/'.$post->image }}"
                             alt="post_image" class="img-fluid rounded">
                         </a>
                     <div class="excerpt">
@@ -110,7 +110,7 @@
 
 
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="hentry img-1 h-100 gradient"
-                    style="background-image: url('{{ $post->image }}');">
+                    style="background-image: url('{{ 'storage/'.$post->image }}');">
                     <span class="post-category text-white bg-danger">{{ $post->category->name }}</span>
                     <div class="text">
                         <h2>{{ $post->title }}</h2>
@@ -124,7 +124,7 @@
 
                 @foreach ($randomfirstColPost as $post)
                 <a href="{{ route('post', ['slug' => $post->slug]) }}" class="hentry img-2 v-height mb30 gradient"
-                    style="background-image: url('{{ $post->image }}');">
+                    style="background-image: url('{{ 'storage/'.$post->image }}');">
                     <span class="post-category text-white bg-success">Nature</span>
                     <div class="text text-sm">
                         <h2>{{ $post->title }}</h2>
@@ -136,7 +136,7 @@
                 <div class="two-col d-block d-md-flex justify-content-between">
                     @foreach ($randommiddleColPost as $post)
                     <a href="{{ route('post', ['slug' => $post->slug]) }}" class="hentry v-height img-2 gradient"
-                        style="background-image: url('{{ $post->image }}');">
+                        style="background-image: url('{{ 'storage/'.$post->image }}');">
                         <span class="post-category text-white bg-primary">Sports</span>
                         <div class="text text-sm">
                             <h2>{{ $post->title }}</h2>
